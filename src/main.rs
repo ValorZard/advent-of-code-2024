@@ -1,4 +1,4 @@
-use std::{env, fs};
+use std::{collections::HashMap, env, fs};
 
 fn run_day_1(contents: String) {
     let lines = contents.lines();
@@ -20,6 +20,23 @@ fn run_day_1(contents: String) {
         total_distance += (list1[i] - list2[i]).abs();
     }
     println!("Total distance: {total_distance}");
+
+    // second part -> similarity score
+    let mut similarity_score = 0;
+    let mut right_number_map = HashMap::<i32, i32>::new();
+    for i in 0..list2.len() {
+        let number = list2[i];
+        right_number_map.entry(number).and_modify(|numb| *numb += 1).or_insert(1);
+    }
+
+    for i in 0..list1.len() {
+        let number = list1[i];
+        if right_number_map.contains_key(&number) {
+            similarity_score += number * right_number_map.get(&number).unwrap();
+        }
+    }
+
+    println!("Similarity score: {similarity_score}");
 }
 
 fn main() {
