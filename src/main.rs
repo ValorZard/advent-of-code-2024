@@ -1,19 +1,6 @@
 use std::{env, fs};
 
-fn main() {
-    // run like so: cargo run -- test poem.txt
-    let args: Vec<String> = env::args().collect();
-    let query = &args[1];
-    let filename = &args[2];
-
-    println!("Searching for {query}");
-
-    println!("In file {filename}");
-
-    let contents = fs::read_to_string(filename)
-        .expect("Should have been able to read the file");
-
-    println!("With text:\n{contents}");
+fn run_day_1(contents: String) {
     let lines = contents.lines();
 
     let mut list1 = Vec::<i32>::new();
@@ -33,4 +20,24 @@ fn main() {
         total_distance += (list1[i] - list2[i]).abs();
     }
     println!("Total distance: {total_distance}");
+}
+
+fn main() {
+    // run like so: cargo run -- test poem.txt
+    let args: Vec<String> = env::args().collect();
+    let query = &args[1];
+    let filename = &args[2];
+
+    println!("Searching for {query}");
+
+    println!("In file {filename}");
+
+    let contents = fs::read_to_string(filename)
+        .expect("Should have been able to read the file");
+
+    println!("With text:\n{contents}");
+    
+    if query == "day-1" {
+        run_day_1(contents);
+    }
 }
