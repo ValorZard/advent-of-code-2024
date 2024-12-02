@@ -40,6 +40,43 @@ fn run_day_1(contents: String) {
 }
 
 fn run_day_2(contents: String) {
+    let lines = contents.lines();
+    let mut number_of_unsafe_reports = 0;
+    for line in lines {
+        println!("{line}");
+        let array = line.split_whitespace().map(|num| num.parse::<i32>().unwrap()).collect::<Vec<i32>>();
+        let mut previous = array[0];
+        let mut current = array[1];
+        let mut is_increasing = true;
+        let mut is_unsafe = false;
+        if previous == current {
+            is_unsafe = true;
+        }
+        else if previous > current {
+            is_increasing = false;
+        }
+        for i in 1..array.len() {
+            previous = array[i - 1];
+            current = array[i];
+            if previous == current {
+                is_unsafe = true;
+            }
+            else if (previous - current).abs() > 3 {
+                is_unsafe = true;
+            }
+            else if is_increasing && previous > current {
+                is_unsafe = true;
+            }
+            else if !is_increasing && previous < current {
+                is_unsafe = true;
+            }
+        }
+        if is_unsafe {
+            number_of_unsafe_reports += 1;
+            println!("Unsafe report");
+        }
+    }
+    println!("Number of unsafe reports: {number_of_unsafe_reports}");
 }
 
 fn main() {
@@ -55,7 +92,7 @@ fn main() {
     let contents = fs::read_to_string(filename)
         .expect("Should have been able to read the file");
 
-    println!("With text:\n{contents}");
+    //println!("With text:\n{contents}");
     
     match query.as_str() {
         "day1" => run_day_1(contents),
