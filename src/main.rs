@@ -47,7 +47,6 @@ fn safe_value_checker(array: Vec<i32>) -> bool {
     let mut current = array[1];
     let mut is_increasing = true;
     let mut is_unsafe = false;
-    let mut number_of_problems = 0;
     if previous > current {
         is_increasing = false;
     }
@@ -56,19 +55,15 @@ fn safe_value_checker(array: Vec<i32>) -> bool {
         current = array[i];
         if previous == current {
             is_unsafe = true;
-            number_of_problems += 1;
         } else if (previous - current).abs() > 3 {
             is_unsafe = true;
-            number_of_problems += 1;
         } else if is_increasing && previous > current {
             is_unsafe = true;
-            number_of_problems += 1;
         } else if !is_increasing && previous < current {
             is_unsafe = true;
-            number_of_problems += 1;
         }
     }
-    if !is_unsafe && number_of_problems <= 1 {
+    if !is_unsafe {
         println!("safe report");
         return true;
     }
