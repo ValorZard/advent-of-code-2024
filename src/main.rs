@@ -39,6 +39,9 @@ fn run_day_1(contents: String) {
     println!("Similarity score: {similarity_score}");
 }
 
+fn run_day_2(contents: String) {
+}
+
 fn main() {
     // run like so: cargo run -- test poem.txt
     let args: Vec<String> = env::args().collect();
@@ -54,7 +57,9 @@ fn main() {
 
     println!("With text:\n{contents}");
     
-    if query == "day-1" {
-        run_day_1(contents);
+    match query.as_str() {
+        "day1" => run_day_1(contents),
+        "day2" => run_day_2(contents),
+        _ => println!("Invalid query")
     }
 }
