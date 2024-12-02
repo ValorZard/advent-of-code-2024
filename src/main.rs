@@ -39,13 +39,8 @@ fn run_day_1(contents: String) {
     println!("Similarity score: {similarity_score}");
 }
 
-fn run_day_2(contents: String) {
-    let lines = contents.lines();
-    let mut number_of_safe_reports = 0;
-    for line in lines {
-        println!("{line}");
-        let array = line.split_whitespace().map(|num| num.parse::<i32>().unwrap()).collect::<Vec<i32>>();
-        let mut previous = array[0];
+fn safe_value_checker(array: Vec<i32>) -> bool {
+    let mut previous = array[0];
         let mut current = array[1];
         let mut is_increasing = true;
         let mut is_unsafe = false;
@@ -74,8 +69,20 @@ fn run_day_2(contents: String) {
             }
         }
         if !is_unsafe && number_of_problems <= 1 {
-            number_of_safe_reports += 1;
             println!("safe report");
+            return true;
+        }
+        return false;
+}
+
+fn run_day_2(contents: String) {
+    let lines = contents.lines();
+    let mut number_of_safe_reports = 0;
+    for line in lines {
+        println!("{line}");
+        let array = line.split_whitespace().map(|num| num.parse::<i32>().unwrap()).collect::<Vec<i32>>();
+        if safe_value_checker(array) {
+            number_of_safe_reports += 1;
         }
     }
     println!("Number of safe reports: {number_of_safe_reports}");
