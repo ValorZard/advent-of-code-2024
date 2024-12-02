@@ -118,8 +118,7 @@ fn run_day_2_part_2(contents: String) {
             .collect::<Vec<i32>>();
         if safe_value_checker(&array) {
             number_of_safe_reports += 1;
-        }
-        else {
+        } else {
             for i in 0..array.len() {
                 let mut new_array = array.clone();
                 new_array.remove(i);
