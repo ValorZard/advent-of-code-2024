@@ -41,7 +41,7 @@ fn run_day_1(contents: String) {
 
 fn run_day_2(contents: String) {
     let lines = contents.lines();
-    let mut number_of_unsafe_reports = 0;
+    let mut number_of_safe_reports = 0;
     for line in lines {
         println!("{line}");
         let array = line.split_whitespace().map(|num| num.parse::<i32>().unwrap()).collect::<Vec<i32>>();
@@ -71,12 +71,12 @@ fn run_day_2(contents: String) {
                 is_unsafe = true;
             }
         }
-        if is_unsafe {
-            number_of_unsafe_reports += 1;
-            println!("Unsafe report");
+        if !is_unsafe {
+            number_of_safe_reports += 1;
+            println!("safe report");
         }
     }
-    println!("Number of unsafe reports: {number_of_unsafe_reports}");
+    println!("Number of safe reports: {number_of_safe_reports}");
 }
 
 fn main() {
