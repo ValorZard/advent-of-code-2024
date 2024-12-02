@@ -75,13 +75,22 @@ fn run_day_2(contents: String) {
     let mut number_of_safe_reports = 0;
     for line in lines {
         println!("{line}");
-        //let mut is_all_safe = false;
         let array = line
             .split_whitespace()
             .map(|num| num.parse::<i32>().unwrap())
             .collect::<Vec<i32>>();
-        if safe_value_checker(array) {
+        if safe_value_checker(array.clone()) {
             number_of_safe_reports += 1;
+        }
+        else {
+            for i in 0..array.len() {
+                let mut new_array = array.clone();
+                new_array.remove(i);
+                if safe_value_checker(new_array) {
+                    number_of_safe_reports += 1;
+                    break;
+                }
+            }
         }
     }
     println!("Number of safe reports: {number_of_safe_reports}");
