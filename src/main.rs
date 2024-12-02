@@ -49,10 +49,8 @@ fn run_day_2(contents: String) {
         let mut current = array[1];
         let mut is_increasing = true;
         let mut is_unsafe = false;
-        if previous == current {
-            is_unsafe = true;
-        }
-        else if previous > current {
+        let mut used_problem_dampener = false;
+        if previous > current {
             is_increasing = false;
         }
         for i in 1..array.len() {
