@@ -42,6 +42,43 @@ fn run_day_1(contents: String) {
     println!("Similarity score: {similarity_score}");
 }
 
+fn run_day_2_part_1(contents: String) {
+    let lines = contents.lines();
+    let mut number_of_safe_reports = 0;
+    for line in lines {
+        println!("{line}");
+        let array = line
+            .split_whitespace()
+            .map(|num| num.parse::<i32>().unwrap())
+            .collect::<Vec<i32>>();
+        let mut previous = array[0];
+        let mut current = array[1];
+        let mut is_increasing = true;
+        let mut is_unsafe = false;
+        if previous > current {
+            is_increasing = false;
+        }
+        for i in 1..array.len() {
+            previous = array[i - 1];
+            current = array[i];
+            if previous == current {
+                is_unsafe = true;
+            } else if (previous - current).abs() > 3 {
+                is_unsafe = true;
+            } else if is_increasing && previous > current {
+                is_unsafe = true;
+            } else if !is_increasing && previous < current {
+                is_unsafe = true;
+            }
+        }
+        if !is_unsafe {
+            println!("safe report");
+            number_of_safe_reports += 1;
+        }
+    }
+    println!("Number of safe reports: {number_of_safe_reports}");
+}
+
 fn safe_value_checker(array: &Vec<i32>) -> bool {
     let mut previous = array[0];
     let mut current = array[1];
@@ -70,7 +107,7 @@ fn safe_value_checker(array: &Vec<i32>) -> bool {
     return false;
 }
 
-fn run_day_2(contents: String) {
+fn run_day_2_part_2(contents: String) {
     let lines = contents.lines();
     let mut number_of_safe_reports = 0;
     for line in lines {
@@ -112,7 +149,8 @@ fn main() {
 
     match query.as_str() {
         "day1" => run_day_1(contents),
-        "day2" => run_day_2(contents),
+        "day2-part1" => run_day_2_part_1(contents),
+        "day2-part2" => run_day_2_part_2(contents),
         _ => println!("Invalid query"),
     }
 }
