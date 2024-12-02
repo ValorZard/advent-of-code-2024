@@ -26,7 +26,10 @@ fn run_day_1(contents: String) {
     let mut right_number_map = HashMap::<i32, i32>::new();
     for i in 0..list2.len() {
         let number = list2[i];
-        right_number_map.entry(number).and_modify(|numb| *numb += 1).or_insert(1);
+        right_number_map
+            .entry(number)
+            .and_modify(|numb| *numb += 1)
+            .or_insert(1);
     }
 
     for i in 0..list1.len() {
@@ -41,38 +44,35 @@ fn run_day_1(contents: String) {
 
 fn safe_value_checker(array: Vec<i32>) -> bool {
     let mut previous = array[0];
-        let mut current = array[1];
-        let mut is_increasing = true;
-        let mut is_unsafe = false;
-        let mut number_of_problems = 0;
-        if previous > current {
-            is_increasing = false;
+    let mut current = array[1];
+    let mut is_increasing = true;
+    let mut is_unsafe = false;
+    let mut number_of_problems = 0;
+    if previous > current {
+        is_increasing = false;
+    }
+    for i in 1..array.len() {
+        previous = array[i - 1];
+        current = array[i];
+        if previous == current {
+            is_unsafe = true;
+            number_of_problems += 1;
+        } else if (previous - current).abs() > 3 {
+            is_unsafe = true;
+            number_of_problems += 1;
+        } else if is_increasing && previous > current {
+            is_unsafe = true;
+            number_of_problems += 1;
+        } else if !is_increasing && previous < current {
+            is_unsafe = true;
+            number_of_problems += 1;
         }
-        for i in 1..array.len() {
-            previous = array[i - 1];
-            current = array[i];
-            if previous == current {
-                is_unsafe = true;
-                number_of_problems += 1;
-            }
-            else if (previous - current).abs() > 3 {
-                is_unsafe = true;
-                number_of_problems += 1;
-            }
-            else if is_increasing && previous > current {
-                is_unsafe = true;
-                number_of_problems += 1;
-            }
-            else if !is_increasing && previous < current {
-                is_unsafe = true;
-                number_of_problems += 1;
-            }
-        }
-        if !is_unsafe && number_of_problems <= 1 {
-            println!("safe report");
-            return true;
-        }
-        return false;
+    }
+    if !is_unsafe && number_of_problems <= 1 {
+        println!("safe report");
+        return true;
+    }
+    return false;
 }
 
 fn run_day_2(contents: String) {
@@ -80,7 +80,11 @@ fn run_day_2(contents: String) {
     let mut number_of_safe_reports = 0;
     for line in lines {
         println!("{line}");
-        let array = line.split_whitespace().map(|num| num.parse::<i32>().unwrap()).collect::<Vec<i32>>();
+        //let mut is_all_safe = false;
+        let array = line
+            .split_whitespace()
+            .map(|num| num.parse::<i32>().unwrap())
+            .collect::<Vec<i32>>();
         if safe_value_checker(array) {
             number_of_safe_reports += 1;
         }
@@ -98,14 +102,13 @@ fn main() {
 
     println!("In file {filename}");
 
-    let contents = fs::read_to_string(filename)
-        .expect("Should have been able to read the file");
+    let contents = fs::read_to_string(filename).expect("Should have been able to read the file");
 
     //println!("With text:\n{contents}");
-    
+
     match query.as_str() {
         "day1" => run_day_1(contents),
         "day2" => run_day_2(contents),
-        _ => println!("Invalid query")
+        _ => println!("Invalid query"),
     }
 }
