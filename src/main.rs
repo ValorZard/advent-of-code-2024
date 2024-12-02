@@ -42,7 +42,7 @@ fn run_day_1(contents: String) {
     println!("Similarity score: {similarity_score}");
 }
 
-fn safe_value_checker(array: Vec<i32>) -> bool {
+fn safe_value_checker(array: &Vec<i32>) -> bool {
     let mut previous = array[0];
     let mut current = array[1];
     let mut is_increasing = true;
@@ -79,14 +79,14 @@ fn run_day_2(contents: String) {
             .split_whitespace()
             .map(|num| num.parse::<i32>().unwrap())
             .collect::<Vec<i32>>();
-        if safe_value_checker(array.clone()) {
+        if safe_value_checker(&array) {
             number_of_safe_reports += 1;
         }
         else {
             for i in 0..array.len() {
                 let mut new_array = array.clone();
                 new_array.remove(i);
-                if safe_value_checker(new_array) {
+                if safe_value_checker(&new_array) {
                     number_of_safe_reports += 1;
                     break;
                 }
