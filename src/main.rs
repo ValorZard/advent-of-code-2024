@@ -49,7 +49,7 @@ fn run_day_2(contents: String) {
         let mut current = array[1];
         let mut is_increasing = true;
         let mut is_unsafe = false;
-        let mut used_problem_dampener = false;
+        let mut number_of_problems = 0;
         if previous > current {
             is_increasing = false;
         }
@@ -58,18 +58,22 @@ fn run_day_2(contents: String) {
             current = array[i];
             if previous == current {
                 is_unsafe = true;
+                number_of_problems += 1;
             }
             else if (previous - current).abs() > 3 {
                 is_unsafe = true;
+                number_of_problems += 1;
             }
             else if is_increasing && previous > current {
                 is_unsafe = true;
+                number_of_problems += 1;
             }
             else if !is_increasing && previous < current {
                 is_unsafe = true;
+                number_of_problems += 1;
             }
         }
-        if !is_unsafe {
+        if !is_unsafe && number_of_problems <= 1 {
             number_of_safe_reports += 1;
             println!("safe report");
         }
