@@ -50,3 +50,21 @@ pub fn run_day_3_part_1(contents: String) {
     }
     println!("Total value: {}", total_value);
 }
+
+pub fn run_day_3_part_2(contents: String) {
+    println!("Running day 3 part 1");
+    let mut total_value = 0;
+    for line in contents.lines() {
+        println!("{}", line);
+        let indices: Vec<(usize, &str)> = line.match_indices(MUL_FUNC_STARTER).collect();
+        for (index, _) in indices {
+            let remainder = &line[(index + MUL_FUNC_STARTER.len())..].to_string();
+            println!("Index: {}, String: {}", index, remainder);
+            if let Ok(value) = seek_parameters_and_multiply(remainder) {
+                println!("Value: {}", value);
+                total_value += value;
+            } 
+        }
+    }
+    println!("Total value: {}", total_value);
+}
