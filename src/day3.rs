@@ -85,7 +85,7 @@ pub fn run_day_3_part_2(contents: String) {
 
         for (index, _) in indices {
             let remainder = &new_line[(index + MUL_FUNC_STARTER.len())..].to_string();
-            println!("Index: {}, String: {}", index, remainder);
+            //println!("Index: {}, String: {}", index, remainder);
             if let Ok(value) = seek_parameters_and_multiply(remainder) {
                 println!("Value: {}", value);
                 total_value += value;
