@@ -2,7 +2,7 @@ use std::error::Error;
 
 const MUL_FUNC_STARTER: &str = "mul(";
 
-fn seek_parameters_and_multiply(remainder: &String) -> Result<i32, Box<dyn Error>> {
+fn seek_parameters_and_multiply(remainder: &str) -> Result<i32, Box<dyn Error>> {
     let mut param1 = String::new();
     let mut param2 = String::new();
 
@@ -30,7 +30,7 @@ fn seek_parameters_and_multiply(remainder: &String) -> Result<i32, Box<dyn Error
     return Err("Could not find closing parenthesis".into());
 }
 
-pub fn run_day_3_part_1(contents: String) {
+pub fn run_day_3_part_1(contents: &str) {
     println!("Running day 3 part 1");
     let mut total_value = 0;
     for line in contents.lines() {
@@ -51,7 +51,7 @@ pub fn run_day_3_part_1(contents: String) {
 const DO_STARTER: &str = "do()";
 const DONT_STARTER: &str = "don't()";
 
-pub fn run_day_3_part_2(contents: String) {
+pub fn run_day_3_part_2(contents: &str) {
     println!("Running day 3 part 2");
     let mut total_value = 0;
     println!("Starting line: {}", contents);
