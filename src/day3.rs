@@ -64,24 +64,33 @@ pub fn run_day_3_part_2(contents: String) {
         let dont_indices: Vec<(usize, &str)> = line.match_indices(DONT_STARTER).collect();
         // each pair is a (DONT, DO) pair
         let mut do_pairs = Vec::<(usize, usize)>::new();
-        let mut dont_iterator = dont_indices.into_iter();
-        let mut do_iterator = do_indices.into_iter();
-        let mut current_dont_index = dont_iterator.next().unwrap().0;
-        let mut current_do_index = do_iterator.next().unwrap().0;
-        while do_iterator.len() > 0 && dont_iterator.len() > 0 {
-            if (current_dont_index > current_do_index) {
-                do_pairs.push((current_do_index, current_dont_index));
-                current_do_index = do_iterator.next().unwrap().0;
-                current_dont_index = dont_iterator.next().unwrap().0;
-            }
-            else {
-                current_dont_index = dont_iterator.next().unwrap().0;
+        let mut dont_iterator = dont_indices.iter();
+        let mut do_iterator = do_indices.iter();
+
+        if let Some(dont_index) = dont_iterator.next() {
+            if let Some(do_index) = do_iterator.next() {
+                if dont_index.0 < do_index.0 {
+                    do_pairs.push((dont_index.0, do_index.0));
+                    
+                    while let Some(dont_index) = dont_iterator.next() {
+                        if let Some(do_index) = do_iterator.next() {
+                            if dont_index.0 < do_index.0 {
+                                do_pairs.push((dont_index.0, do_index.0));
+                            }
+                        }
+                    }
+                }
             }
         }
 
+        for (dont_index, do_index) in &do_pairs {
+            println!("Dont index: {}, Do: {}", dont_index, do_index);
+        }
+
+
         let sorted_indices = indices.into_iter().filter(|(index, _)| {
-            for (do_start, dont) in &do_pairs {
-                if *index > *do_start && *index < *dont {
+            for (dont_index, do_index) in &do_pairs {
+                if *index > *dont_index && *index < *do_index {
                     return false;
                 }
             }
