@@ -56,33 +56,34 @@ pub fn run_day_3_part_2(contents: String) {
     let mut total_value = 0;
     println!("Starting line: {}", contents);
 
-    let mut new_line = contents.to_string();
-    'outer: while let Some(dont_index) = new_line.find(DONT_STARTER) {
-        while let Some(do_index) = new_line.find(DO_STARTER) {
-            println!("Do index: {}, Dont index: {}", do_index, dont_index);
+    let lines = contents.split(DONT_STARTER).collect::<Vec<&str>>();
 
-            if dont_index < do_index {
-                new_line.replace_range(dont_index..(do_index + DO_STARTER.len()), "");
-                continue 'outer;
-            } else {
-                // keep searching for compatible do() and don't() pairs, but erase the do() that don't fit
-                new_line.replace_range(do_index..(do_index + DO_STARTER.len()), "");
-                continue;
-            }
+    let mut sorted_lines = Vec::<&str>::new();
+
+    // push back first dont line since its good
+    sorted_lines.push(lines[0]);
+    
+    // for the rest of the lines, we want to split at do() and push the remainder to sorted_lines
+    for i in 1..lines.len() {
+        let new_line = lines[i];
+        let new_line_split = new_line.split(DO_STARTER).collect::<Vec<&str>>();
+        // ignore the first element since it doesn't count (don't() ... do())
+        // we don't care if the rest have doesn't have do() since we're not looking for it
+        for j in 1..new_line_split.len() {
+            sorted_lines.push(new_line_split[j]);
         }
-        new_line = new_line[..dont_index].to_string();
     }
 
-    println!("New line: {}", new_line);
+    for line in sorted_lines {
+        let indices: Vec<(usize, &str)> = line.match_indices(MUL_FUNC_STARTER).collect();
 
-    let indices: Vec<(usize, &str)> = new_line.match_indices(MUL_FUNC_STARTER).collect();
-
-    for (index, _) in indices {
-        let remainder = &new_line[(index + MUL_FUNC_STARTER.len())..].to_string();
-        //println!("Index: {}, String: {}", index, remainder);
-        if let Ok(value) = seek_parameters_and_multiply(remainder) {
-            println!("Value: {}", value);
-            total_value += value;
+        for (index, _) in indices {
+            let remainder = &line[(index + MUL_FUNC_STARTER.len())..].to_string();
+            //println!("Index: {}, String: {}", index, remainder);
+            if let Ok(value) = seek_parameters_and_multiply(remainder) {
+                println!("Value: {}", value);
+                total_value += value;
+            }
         }
     }
     println!("Total value: {}", total_value);
