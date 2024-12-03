@@ -1,7 +1,8 @@
-use std::{collections::HashMap, env, fs};
+use std::{env, fs};
 
 mod day1;
 mod day2;
+mod day3;
 
 fn main() {
     // run like so: cargo run -- test poem.txt
@@ -21,6 +22,7 @@ fn main() {
         "day1" => day1::run_day_1(contents),
         "day2-part1" => day2::run_day_2_part_1(contents),
         "day2-part2" => day2::run_day_2_part_2(contents),
+        "day3-part1" => day3::run_day_3_part_1(contents),
         _ => println!("Invalid query"),
     }
 }
