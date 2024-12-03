@@ -60,24 +60,25 @@ pub fn run_day_3_part_2(contents: String) {
     for line in contents.lines() {
         println!("Starting line: {}", line);
 
-        let dont_indices: Vec<(usize, &str)> = line.match_indices(DONT_STARTER).collect();
-        let do_indices: Vec<(usize, &str)> = line.match_indices(DO_STARTER).collect();
-
         let mut new_line = line.to_string();
-
-        let mut dont_iter = dont_indices.iter();
-        let mut do_iter = do_indices.iter();
-        'outer: while let Some((dont_index, _)) = dont_iter.next() {
-            while let Some((do_index,_)) = do_iter.next() {
-                if dont_index < do_index && *do_index < new_line.len(){
-                    let first_half = new_line[..*dont_index].to_string();
-                    let second_half = &new_line[*do_index..];
-                    new_line = first_half + second_half;
+        'outer: while let Some(dont_index) = new_line.find(DONT_STARTER) {
+            while let Some(do_index) = new_line.find(DO_STARTER) {
+                println!("Do index: {}, Dont index: {}", do_index, dont_index);
+                
+                if dont_index < do_index {
+                    new_line.replace_range(dont_index..(do_index + DO_STARTER.len()), "");
                     continue 'outer;
                 }
+                else {
+                    // keep searching for compatible do() and don't() pairs, but erase the do() that don't fit
+                    new_line.replace_range(do_index..(do_index + DO_STARTER.len()), "");
+                    continue;
+                }   
+                
             }
-            new_line = new_line[..*dont_index].to_string();
+            new_line = new_line[..dont_index].to_string();
         }
+        
         println!("New line: {}", new_line);
 
         let indices: Vec<(usize, &str)> = new_line.match_indices(MUL_FUNC_STARTER).collect();
