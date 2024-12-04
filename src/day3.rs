@@ -31,12 +31,13 @@ fn seek_parameters_and_multiply(remainder: &str) -> Result<i32, Box<dyn Error>> 
 }
 
 pub fn run_day_3_part_1(contents: &str) -> impl Display {
-    contents.split(MUL_FUNC_STARTER).map(|line| {
+    let mut total_value = 0;
+    contents.split(MUL_FUNC_STARTER).for_each(|line| {
         if let Ok(value) = seek_parameters_and_multiply(line) {
-            return value;
+            total_value += value;
         }
-        0
-    }).sum::<i32>()
+    });
+    total_value
 }
 
 const DO_STARTER: &str = "do()";
