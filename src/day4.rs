@@ -63,19 +63,53 @@ fn check_reversed_vertical(lines: &Vec<&str>, x: usize, y: usize) -> i32 {
             return 0;
         }
     }
+    println!("Found SAMX");
+    1
+}
+
+fn check_diagonal(lines: &Vec<&str>, x: usize, y: usize) -> i32 {
+    for i in 0..XMAS_STR.len() {
+        // make sure the rest of the line makes up the rest of XMAS
+        if y + i < lines.len() {
+            if let Some(c) = lines[y + i].chars().nth(x + i) {
+                if c != XMAS_STR[i] {
+                    return 0;
+                }
+            }
+        }
+        else {
+            return 0;
+        }
+    }
     println!("Found XMAS");
+    1
+}
+
+fn check_reversed_diagonal(lines: &Vec<&str>, x: usize, y: usize) -> i32 {
+    for i in 0..SAMX_STR.len() {
+        // make sure the rest of the line makes up the rest of XMAS
+        if y + i < lines.len() {
+            if let Some(c) = lines[y + i].chars().nth(x + i) {
+                if c != SAMX_STR[i] {
+                    return 0;
+                }
+            }
+        }
+        else {
+            return 0;
+        }
+    }
+    println!("Found SAMX");
     1
 }
 
 fn run_xmas_checker(lines: &Vec<&str>, is_reversed: bool, x: usize, y: usize) -> i32 {
     //println!("Checking xmas at {}, {} -> {}", x, y, lines[y].chars().nth(x).unwrap());
     if is_reversed {
-        //return check_reversed_horizontal(&lines[y].chars().collect(), x);
-        return check_reversed_vertical(lines, x, y);
+        return check_reversed_horizontal(&lines[y].chars().collect(), x) + check_reversed_vertical(lines, x, y) + check_reversed_diagonal(lines, x, y);
     }
     else {
-        //return check_horizontal(&lines[y].chars().collect(), x);
-        return check_vertical(lines, x, y);
+        return check_horizontal(&lines[y].chars().collect(), x) + check_vertical(lines, x, y) + check_diagonal(lines, x, y);
     }
 }
 
