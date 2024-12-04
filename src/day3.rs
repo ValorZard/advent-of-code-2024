@@ -31,22 +31,12 @@ fn seek_parameters_and_multiply(remainder: &str) -> Result<i32, Box<dyn Error>> 
 }
 
 pub fn run_day_3_part_1(contents: &str) -> impl Display {
-    //println!("Running day 3 part 1");
-    let mut total_value = 0;
-    for line in contents.lines() {
-        //println!("{}", line);
-        let indices: Vec<(usize, &str)> = line.match_indices(MUL_FUNC_STARTER).collect();
-        for (index, _) in indices {
-            let remainder = &line[(index + MUL_FUNC_STARTER.len())..].to_string();
-            //println!("Index: {}, String: {}", index, remainder);
-            if let Ok(value) = seek_parameters_and_multiply(remainder) {
-                //println!("Value: {}", value);
-                total_value += value;
-            }
+    contents.split(MUL_FUNC_STARTER).map(|line| {
+        if let Ok(value) = seek_parameters_and_multiply(line) {
+            return value;
         }
-    }
-    //println!("Total value: {}", total_value);
-    total_value
+        0
+    }).sum::<i32>()
 }
 
 const DO_STARTER: &str = "do()";
@@ -63,7 +53,7 @@ pub fn run_day_3_part_2(contents: &str) -> impl Display {
 
     // push back first dont line since its good
     sorted_lines.push(lines[0]);
-    
+
     // for the rest of the lines, we want to split at do() and push the remainder to sorted_lines
     for i in 1..lines.len() {
         let new_line = lines[i];
