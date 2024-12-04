@@ -22,8 +22,8 @@ fn main() {
         "day1" => day1::run_day_1(contents),
         "day2-part1" => day2::run_day_2_part_1(contents),
         "day2-part2" => day2::run_day_2_part_2(contents),
-        "day3-part1" => day3::run_day_3_part_1(&contents),
-        "day3-part2" => day3::run_day_3_part_2(&contents),
+        "day3-part1" => println!("Result: {}", day3::run_day_3_part_1(&contents)),
+        "day3-part2" => println!("Result: {}", day3::run_day_3_part_2(&contents)),
         _ => println!("Invalid query"),
     }
 }

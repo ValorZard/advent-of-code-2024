@@ -1,4 +1,4 @@
-use std::error::Error;
+use std::{error::Error, fmt::Display};
 
 const MUL_FUNC_STARTER: &str = "mul(";
 
@@ -30,31 +30,32 @@ fn seek_parameters_and_multiply(remainder: &str) -> Result<i32, Box<dyn Error>> 
     return Err("Could not find closing parenthesis".into());
 }
 
-pub fn run_day_3_part_1(contents: &str) {
-    println!("Running day 3 part 1");
+pub fn run_day_3_part_1(contents: &str) -> impl Display {
+    //println!("Running day 3 part 1");
     let mut total_value = 0;
     for line in contents.lines() {
-        println!("{}", line);
+        //println!("{}", line);
         let indices: Vec<(usize, &str)> = line.match_indices(MUL_FUNC_STARTER).collect();
         for (index, _) in indices {
             let remainder = &line[(index + MUL_FUNC_STARTER.len())..].to_string();
-            println!("Index: {}, String: {}", index, remainder);
+            //println!("Index: {}, String: {}", index, remainder);
             if let Ok(value) = seek_parameters_and_multiply(remainder) {
-                println!("Value: {}", value);
+                //println!("Value: {}", value);
                 total_value += value;
             }
         }
     }
-    println!("Total value: {}", total_value);
+    //println!("Total value: {}", total_value);
+    total_value
 }
 
 const DO_STARTER: &str = "do()";
 const DONT_STARTER: &str = "don't()";
 
-pub fn run_day_3_part_2(contents: &str) {
-    println!("Running day 3 part 2");
+pub fn run_day_3_part_2(contents: &str) -> impl Display {
+    //println!("Running day 3 part 2");
     let mut total_value = 0;
-    println!("Starting line: {}", contents);
+    //println!("Starting line: {}", contents);
 
     let lines = contents.split(DONT_STARTER).collect::<Vec<&str>>();
 
@@ -81,10 +82,11 @@ pub fn run_day_3_part_2(contents: &str) {
             let remainder = &line[(index + MUL_FUNC_STARTER.len())..].to_string();
             //println!("Index: {}, String: {}", index, remainder);
             if let Ok(value) = seek_parameters_and_multiply(remainder) {
-                println!("Value: {}", value);
+                //println!("Value: {}", value);
                 total_value += value;
             }
         }
     }
-    println!("Total value: {}", total_value);
+    //println!("Total value: {}", total_value);
+    total_value
 }
