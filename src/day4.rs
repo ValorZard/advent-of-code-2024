@@ -28,10 +28,10 @@ fn find_word(grid: &[&[u8]], word: &[u8], row: usize, col: usize, dr: isize, dc:
 fn run_xmas_checker(lines: &[&[u8]], is_reversed: bool, x: usize, y: usize) -> u32 {
     //println!("Checking xmas at {}, {} -> {}", x, y, lines[y].chars().nth(x).unwrap());
     if is_reversed {
-        return find_word(lines, "SAMX".as_bytes(), x, y, 1, 0) + find_word(lines, "SAMX".as_bytes(), x, y, 0, 1) + find_word(lines, "SAMX".as_bytes(), x, y, 1, 1) + find_word(lines, "SAMX".as_bytes(), x, y, -1, -1);
+        return find_word(lines, "SAMX".as_bytes(), x, y, 1, 0) + find_word(lines, "SAMX".as_bytes(), x, y, 0, 1) + find_word(lines, "SAMX".as_bytes(), x, y, 1, 1) + find_word(lines, "SAMX".as_bytes(), x, y, -1, 1);
     }
     else {
-        return find_word(lines, "XMAS".as_bytes(), x, y, 1, 0) + find_word(lines, "XMAS".as_bytes(), x, y, 0, 1) + find_word(lines, "XMAS".as_bytes(), x, y, 1, 1) + find_word(lines, "XMAS".as_bytes(), x, y, -1, -1);
+        return find_word(lines, "XMAS".as_bytes(), x, y, 1, 0) + find_word(lines, "XMAS".as_bytes(), x, y, 0, 1) + find_word(lines, "XMAS".as_bytes(), x, y, 1, 1) + find_word(lines, "XMAS".as_bytes(), x, y, -1, 1);
     }
 }
 
