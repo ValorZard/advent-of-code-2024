@@ -50,5 +50,36 @@ pub fn run_day_4_part_1(contents: &str) -> impl Display + use<'_> {
 }
 
 pub fn run_day_4_part_2(contents: &str) -> impl Display + use<'_> {
-    contents
+    let lines : Vec<&str> = contents.lines().collect();
+    let lines : Vec<&[u8]> = lines.iter().map(|x| x.as_bytes()).collect();
+    let mut total_xmas = 0;
+    //let mut possible_xmas : Vec<Vec<char>> = Vec::new();
+    for x in 1..lines.len() {
+        let line = lines[x];
+        for y in 1..line.len() {
+            if lines[x][y] == 'A' as u8 && (x < lines.len() - 1 && y < lines[x].len() - 1) {
+                if lines[x - 1][y - 1] == 'M' as u8 && lines[x + 1][y - 1] == 'M' as u8 {
+                    if lines[x - 1][y + 1] == 'S' as u8 && lines[x + 1][y + 1] == 'S' as u8 {
+                        total_xmas += 1;
+                    }
+                }
+                if lines[x - 1][y - 1] == 'S' as u8 && lines[x + 1][y - 1] == 'S' as u8 {
+                    if lines[x - 1][y + 1] == 'M' as u8 && lines[x + 1][y + 1] == 'M' as u8 {
+                        total_xmas += 1;
+                    }
+                }
+                if lines[x - 1][y - 1] == 'M' as u8 && lines[x + 1][y - 1] == 'S' as u8 {
+                    if lines[x - 1][y + 1] == 'M' as u8 && lines[x + 1][y + 1] == 'S' as u8 {
+                        total_xmas += 1;
+                    }
+                }
+                if lines[x - 1][y - 1] == 'S' as u8 && lines[x + 1][y - 1] == 'M' as u8 {
+                    if lines[x - 1][y + 1] == 'S' as u8 && lines[x + 1][y + 1] == 'M' as u8 {
+                        total_xmas += 1;
+                    }
+                }
+            }
+        }
+    }
+    total_xmas
 }
