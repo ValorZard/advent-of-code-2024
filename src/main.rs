@@ -4,6 +4,7 @@ mod day1;
 mod day2;
 mod day3;
 mod day4;
+mod day5;
 
 fn main() {
     // run like so: cargo run -- test poem.txt
@@ -27,6 +28,8 @@ fn main() {
         "day3-part2" => println!("Result: {}", day3::run_day_3_part_2(&contents)),
         "day4-part1" => println!("Result: {}", day4::run_day_4_part_1(&contents)),
         "day4-part2" => println!("Result: {}", day4::run_day_4_part_2(&contents)),
+        "day5-part1" => println!("Result: {}", day5::run_day_5_part_1(&contents)),
+        "day5-part2" => println!("Result: {}", day5::run_day_5_part_2(&contents)),
         _ => println!("Invalid query"),
     }
 }
