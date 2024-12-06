@@ -6,9 +6,9 @@ pub fn run_day_6_part_1(contents: &str) -> impl Display + use<'_> {
     for y in 0..guard_map.len() {
        for x in 0..guard_map[y].len() {
             if char::from(guard_map[y][x]) == '^' {
-                if let Some(value) = y.checked_add_signed(-1) {
-                    if guard_map[value][x] != b'#' as u8 {
-                        guard_map[value][x] = '^' as u8;
+                if let Some(new_y) = y.checked_add_signed(-1) {
+                    if guard_map[new_y][x] != b'#' as u8 {
+                        guard_map[new_y][x] = '^' as u8;
                         guard_map[y][x] = 'X' as u8;
                     }
                 }
