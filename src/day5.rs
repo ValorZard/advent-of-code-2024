@@ -43,6 +43,49 @@ pub fn run_day_5_part_1(contents: &str) -> impl Display + use<'_> {
 }
 
 
+fn get_middle_if_invalid_and_then_sorted(pages: &Vec<usize>, num_pairs: &HashMap<usize, HashSet<usize>>) -> (usize, bool) {
+    let mut page_set: HashSet<usize> = HashSet::new();
+    page_set.extend(pages);
+    let mut valid = true;
+    let middle = pages.len() / 2;
+    for (i, page) in pages.into_iter().rev().enumerate() {
+        if let Some(forbidden_pages) = num_pairs.get(page) {
+            let forbidden_count = forbidden_pages.intersection(&page_set).count();
+            // if the number of forbidden pages that are in the set is greater than the position of the current page, this was invalid
+            if i != forbidden_count {
+                valid = false;
+            }
+            if forbidden_count == middle {
+                return (*page, valid);
+            }
+        }
+    }
+    (0, valid)
+}
+
+
 pub fn run_day_5_part_2(contents: &str) -> impl Display + use<'_> {
-    contents
+    let mut num_pairs : HashMap<usize, HashSet<usize>> = HashMap::new();
+    let mut getting_pairs = true;
+    let mut sum = 0;
+    for line in contents.lines() {
+            if getting_pairs {
+                if line.is_empty() {
+                    getting_pairs = false;
+                    continue;
+                }
+                let pair = line.split("|").map(|x| x.parse::<usize>().unwrap()).collect::<Vec<usize>>();
+                // pair[0] is the first page, pair[1] is the page that comes after
+                num_pairs.entry(pair[0]).or_insert(HashSet::new()).insert(pair[1]);
+                println!("{:?}", num_pairs);
+            }
+            else {
+                let pages = line.split(",").map(|x| x.parse::<usize>().unwrap()).collect::<Vec<usize>>();
+                let (middle, valid) = get_middle_if_invalid_and_then_sorted(&pages, &num_pairs);
+                if !valid {
+                    sum += middle;
+                }
+            }
+    }
+    sum
 }
