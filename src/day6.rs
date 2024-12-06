@@ -18,6 +18,7 @@ pub fn run_day_6_part_1(contents: &str) -> impl Display + use<'_> {
                             }
                         }
                         else {
+                            guard_map[y][x] = 'X' as u8;
                             finished = true;
                         }
                     }
@@ -32,6 +33,7 @@ pub fn run_day_6_part_1(contents: &str) -> impl Display + use<'_> {
                             }
                         }
                         else {
+                            guard_map[y][x] = 'X' as u8;
                             finished = true;
                         }
                     }
@@ -46,6 +48,7 @@ pub fn run_day_6_part_1(contents: &str) -> impl Display + use<'_> {
                             }
                         }
                         else {
+                            guard_map[y][x] = 'X' as u8;
                             finished = true;
                         }
                     }
@@ -57,10 +60,10 @@ pub fn run_day_6_part_1(contents: &str) -> impl Display + use<'_> {
                             }
                             else {
                                 guard_map[y][x] = '^' as u8;
-                                finished = true;
                             }
                         }
                         else {
+                            guard_map[y][x] = 'X' as u8;
                             finished = true;
                         }
                     }
@@ -70,13 +73,17 @@ pub fn run_day_6_part_1(contents: &str) -> impl Display + use<'_> {
         }
     }
     println!("full map");
+    let mut count = 0;
     for y in 0..guard_map.len() {
         for x in 0..guard_map[y].len() {
             print!("{}", guard_map[y][x] as char);
+            if guard_map[y][x] == 'X' as u8 {
+                count += 1;
+            }
         }
         println!()
      }
-    contents
+    count
 }
 
 pub fn run_day_6_part_2(contents: &str) -> impl Display + use<'_> {
