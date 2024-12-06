@@ -43,6 +43,20 @@ pub fn run_day_6_part_1(contents: &str) -> impl Display + use<'_> {
                             }
                             else {
                                 guard_map[y][x] = '<' as u8;
+                            }
+                        }
+                        else {
+                            finished = true;
+                        }
+                    }
+                    else if char::from(guard_map[y][x]) == '<' {
+                        if let Some(new_x) = x.checked_add_signed(-1) {
+                            if guard_map[y][new_x] != b'#' as u8 {
+                                guard_map[y][new_x] = '<' as u8;
+                                guard_map[y][x] = 'X' as u8;
+                            }
+                            else {
+                                guard_map[y][x] = '^' as u8;
                                 finished = true;
                             }
                         }
