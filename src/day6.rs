@@ -1,4 +1,4 @@
-use std::fmt::Display;
+use std::{collections::HashSet, fmt::Display};
 
 pub fn run_day_6_part_1(contents: &str) -> impl Display + use<'_> {
     // convert to vec of byte array
@@ -69,7 +69,7 @@ pub fn run_day_6_part_1(contents: &str) -> impl Display + use<'_> {
                     }
                 print!("{}", guard_map[y][x] as char);
             }
-            println!()
+            println!();
         }
     }
     println!("full map");
@@ -86,10 +86,9 @@ pub fn run_day_6_part_1(contents: &str) -> impl Display + use<'_> {
     count
 }
 
-pub fn run_day_6_part_2(contents: &str) -> impl Display + use<'_> {
-    // convert to vec of byte array
-    let mut guard_map = contents.lines().map(|x| x.as_bytes().to_vec()).collect::<Vec<Vec<u8>>>();
+fn loop_checker(guard_map: &mut Vec<Vec<u8>>) -> bool {
     let mut finished = false;
+    let mut turn_points: HashSet<(usize, usize)> = HashSet::new();
     while !finished {
         for y in 0..guard_map.len() {
             for x in 0..guard_map[y].len() {
@@ -100,6 +99,10 @@ pub fn run_day_6_part_2(contents: &str) -> impl Display + use<'_> {
                                 guard_map[y][x] = 'X' as u8;
                             }
                             else {
+                                if turn_points.contains(&(x, y)) {
+                                    return true;
+                                }
+                                turn_points.insert((x, y));
                                 guard_map[y][x] = '>' as u8;
                             }
                         }
@@ -115,6 +118,10 @@ pub fn run_day_6_part_2(contents: &str) -> impl Display + use<'_> {
                                 guard_map[y][x] = 'X' as u8;
                             }
                             else {
+                                if turn_points.contains(&(x, y)) {
+                                    return true;
+                                }
+                                turn_points.insert((x, y));
                                 guard_map[y][x] = 'v' as u8;
                             }
                         }
@@ -130,6 +137,10 @@ pub fn run_day_6_part_2(contents: &str) -> impl Display + use<'_> {
                                 guard_map[y][x] = 'X' as u8;
                             }
                             else {
+                                if turn_points.contains(&(x, y)) {
+                                    return true;
+                                }
+                                turn_points.insert((x, y));
                                 guard_map[y][x] = '<' as u8;
                             }
                         }
@@ -145,6 +156,10 @@ pub fn run_day_6_part_2(contents: &str) -> impl Display + use<'_> {
                                 guard_map[y][x] = 'X' as u8;
                             }
                             else {
+                                if turn_points.contains(&(x, y)) {
+                                    return true;
+                                }
+                                turn_points.insert((x, y));
                                 guard_map[y][x] = '^' as u8;
                             }
                         }
@@ -155,9 +170,16 @@ pub fn run_day_6_part_2(contents: &str) -> impl Display + use<'_> {
                     }
                 print!("{}", guard_map[y][x] as char);
             }
-            println!()
+            println!();
         }
     }
+    false
+}
+
+pub fn run_day_6_part_2(contents: &str) -> impl Display + use<'_> {
+    // convert to vec of byte array
+    let mut guard_map = contents.lines().map(|x| x.as_bytes().to_vec()).collect::<Vec<Vec<u8>>>();
+    println!("looping: {:?}", loop_checker(&mut guard_map));
     println!("full map");
     let mut count = 0;
     for y in 0..guard_map.len() {
@@ -169,5 +191,6 @@ pub fn run_day_6_part_2(contents: &str) -> impl Display + use<'_> {
         }
         println!()
      }
+    //println!("{:?}", turn_points);
     count
 }
