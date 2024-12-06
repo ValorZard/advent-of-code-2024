@@ -3,11 +3,11 @@ use std::{collections::{HashMap, HashSet}, fmt::Display};
 fn check_if_valid(pages: &Vec<usize>, num_pairs: &HashMap<usize, HashSet<usize>>) -> bool {
     println!("Valid checking: {:?}", pages);
     let mut list_of_pages_not_allowed_to_come_before: HashSet<usize> = HashSet::new();
-    for page in pages {
+    for page in pages.into_iter().rev() {
         if list_of_pages_not_allowed_to_come_before.contains(&page) {
             return false;
         }
-        if let Some(forbidden_pages) = num_pairs.get(page) {
+        if let Some(forbidden_pages) = num_pairs.get(&page) {
             list_of_pages_not_allowed_to_come_before.extend(forbidden_pages);
         }
         println!("forbidden pages: {:?}", list_of_pages_not_allowed_to_come_before);
