@@ -94,7 +94,7 @@ fn loop_checker(guard_map: &mut Vec<Vec<u8>>) -> bool {
             for x in 0..guard_map[y].len() {
                     if char::from(guard_map[y][x]) == '^' {
                         if let Some(new_y) = y.checked_add_signed(-1) {
-                            if guard_map[new_y][x] != b'#' as u8 {
+                            if guard_map[new_y][x] != b'#' as u8 && guard_map[new_y][x] != b'O' as u8{
                                 guard_map[new_y][x] = '^' as u8;
                                 guard_map[y][x] = 'X' as u8;
                             }
@@ -113,7 +113,7 @@ fn loop_checker(guard_map: &mut Vec<Vec<u8>>) -> bool {
                     }
                     else if char::from(guard_map[y][x]) == '>' {
                         if x + 1 < guard_map[y].len() {
-                            if guard_map[y][x + 1] != b'#' as u8 {
+                            if guard_map[y][x + 1] != b'#' as u8 && guard_map[y][x + 1] != b'O' as u8{
                                 guard_map[y][x + 1] = '>' as u8;
                                 guard_map[y][x] = 'X' as u8;
                             }
@@ -132,7 +132,7 @@ fn loop_checker(guard_map: &mut Vec<Vec<u8>>) -> bool {
                     }
                     else if char::from(guard_map[y][x]) == 'v' {
                         if y + 1 < guard_map[y].len() {
-                            if guard_map[y + 1][x] != b'#' as u8 {
+                            if guard_map[y + 1][x] != b'#' as u8 && guard_map[y + 1][x] != b'O' as u8{
                                 guard_map[y + 1][x] = 'v' as u8;
                                 guard_map[y][x] = 'X' as u8;
                             }
@@ -151,7 +151,7 @@ fn loop_checker(guard_map: &mut Vec<Vec<u8>>) -> bool {
                     }
                     else if char::from(guard_map[y][x]) == '<' {
                         if let Some(new_x) = x.checked_add_signed(-1) {
-                            if guard_map[y][new_x] != b'#' as u8 {
+                            if guard_map[y][new_x] != b'#' as u8 && guard_map[y][new_x] != b'O' as u8{
                                 guard_map[y][new_x] = '<' as u8;
                                 guard_map[y][x] = 'X' as u8;
                             }
