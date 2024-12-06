@@ -6,10 +6,10 @@ pub fn run_day_6_part_1(contents: &str) -> impl Display + use<'_> {
     for y in 0..guard_map.len() {
        for x in 0..guard_map[y].len() {
             if char::from(guard_map[y][x]) == '^' {
-                println!("Found at {}, {}", x, y);
-            }
-            if char::from(guard_map[y][x]) == '.' {
-                guard_map[y][x] = b'X';
+                if y + 1 < guard_map.len() && guard_map[y+1][x] != b'#' as u8 {
+                    guard_map[y+1][x] = '^' as u8;
+                    guard_map[y][x] = 'X' as u8;
+                }
             }
            print!("{}", guard_map[y][x] as char);
        }
